@@ -1,0 +1,45 @@
+{
+  "name": "dojo",
+  "main": "main.js",
+  "moduleType": [
+    "amd"
+  ],
+  "licenses": [
+    "BSD-3-Clause",
+    "AFL-2.1"
+  ],
+  "ignore": [
+    ".*",
+    "tests",
+    "testsDOH"
+  ],
+  "keywords": [
+    "JavaScript",
+    "Dojo",
+    "Toolkit"
+  ],
+  "authors": [],
+  "homepage": "http://dojotoolkit.org/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dojo/dojo.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "intern-geezer": "2.2.2",
+    "http-proxy": "0.10.3",
+    "glob": "3.2.7",
+    "jsgi-node": "0.3.1",
+    "formidable": "1.0.14",
+    "sinon": "1.12.2"
+  },
+  "_release": "v1.11.2/esri-3.19.0",
+  "_resolution": {
+    "type": "tag",
+    "tag": "v1.11.2/esri-3.19.0",
+    "commit": "3eb49fb549721a6f2936359a3e22b70b0a91096f"
+  },
+  "_source": "https://github.com/Esri/dojo.git",
+  "_target": "v1.11.2/esri-3.19.0",
+  "_originalSource": "Esri/dojo"
+}
