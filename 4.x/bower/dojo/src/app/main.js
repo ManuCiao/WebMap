@@ -1,12 +1,13 @@
 define([
     "esri/WebMap",
     "esri/views/MapView",
+    "esri/widgets/Print",
     "esri/widgets/Legend",
     "dojo/dom-construct",
     "dojo/on",
     "dojo/dom",
     "dojo/domReady!"
-], function(WebMap, MapView, Legend, domConstruct, on, dom) {
+], function(WebMap, MapView, Print, Legend, domConstruct, on, dom) {
 
     var map = new WebMap({
         portalItem: {
@@ -36,33 +37,48 @@ define([
         });
 
 
-var view = new MapView({
-    container: "viewDiv",
-    map: map,
-    scale: 35000000,
-    center: [11.527454, 52.57867]
-});
-view.ui.add(dom.byId("container"), "top-right");
+    var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        scale: 35000000,
+        center: [11.527454, 52.57867],
+        ui: {
+          padding:{
+            top:16,
+            left:16,
+            bottom:16,
+            right:16
+          },
+          components:["zoom","compass","attribution"]
+        }
+    });
+    view.ui.add(dom.byId("container"), "bottom-right");
 
-view.then(function() {
-var tectonicPlates = map.layers.getItemAt(0);
-var earthquakes = map.layers.getItemAt(4);
-var volcanoes = map.layers.getItemAt(3);
-var legend = new Legend({
-    view: view,
-    layerInfos: [{
-        layer: tectonicPlates,
-        title: "Tectonic Plates"
-    }, {
-        layer: volcanoes,
-        title: "Volcanoes"
-    }, {
-        layer: earthquakes,
-        title: "Seismic Activities (over 30 days)"
-    }]
-});
-
-view.ui.add(legend, "bottom-right");
-});
+    view.then(function() {
+        var earthquakes = map.layers.getItemAt(2);
+        var volcanoes = map.layers.getItemAt(3);
+        var tectonicPlates = map.layers.getItemAt(1);
+        var print = new Print({
+            view: view,
+            // specify your own print service
+            printServiceUrl: "https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+        });
+        var legend = new Legend({
+            view: view,
+            layerInfos: [{
+                layer: earthquakes,
+                title: "Seismic Activities (30 days)"
+            }, {
+                layer: volcanoes,
+                title: "Volcanoes"
+            }, {
+                layer: tectonicPlates,
+                title: "Tectonic Plates"
+            }]
+        });
+        legend.startup();
+        view.ui.add(legend, "top-right");
+        view.ui.add(print, "bottom-left");
+    });
 
 });
